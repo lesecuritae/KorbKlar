@@ -1,0 +1,273 @@
+name: Publish initial release
+
+"on":
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-initial.yml"
+
+permissions:
+  contents: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  PYTHONDONTWRITEBYTECODE: "1"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout bootstrap commit
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Reconstruct and verify exact source archive
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          ARCHIVE=/tmp/supermarkt-preisvergleich-0.0.1.tar.xz
+          : > "$ARCHIVE"
+          while read -r sha; do
+            [ -n "$sha" ] || continue
+            gh api "repos/$GITHUB_REPOSITORY/git/blobs/$sha" --jq .content \
+              | tr -d '\n' \
+              | base64 --decode >> "$ARCHIVE"
+          done <<'BLOBS'
+            bb63e375167dd8b522224e38211da2fc53bab0da
+            8e50620f329142b3f76694233aeefb3a822f2ac8
+            74ced09bc4dbf39dab29a7706af329b7dd572379
+            a708222be06f411e9e5c7ab90abeafd03f6ff2dd
+            46da249a08a8b50ee2224102332560b7810fbbfd
+            0b56d8f56003dc01966a0614e7cf43b9e23267b4
+            a07127ab294aa4e116c76272b551704c42e1b491
+            777e94441cdc1efd0d9af47d1a3081a8cb56c625
+            39765736380d162a811bf43b297ad75804e35fd1
+            11f337a10b9960fc624589412849f7948be4fc93
+            b44b0c157de18f71202bc5ea2155a4d3395e1d48
+            10286e30043076d7b4764ec5e66b404a6485abdd
+            e64d025ea51a3cef841d108b93dd423610cbea2c
+            93565cd2ff29f51201fca33bad464482766129fe
+            24750e30b336aadf27aaa82947048fc80be2dc1a
+            0d659c73cdb5fbd08538e3a178e55a1ae842d0c8
+            31d828f50641774b5e38fa6b7df95b843bde0e13
+            8a18857bd9dccd280926cc61a144051f5a61293b
+          BLOBS
+          echo "10c286e74b955300e06092ac3157a3f9329f54e4827d6fb869f3302708765447  $ARCHIVE" | sha256sum --check --strict
+
+          rm -rf /tmp/pristine /tmp/testtree /tmp/release
+          mkdir -p /tmp/pristine /tmp/release
+          python - <<'PYEXTRACT'
+          import tarfile
+          with tarfile.open('/tmp/supermarkt-preisvergleich-0.0.1.tar.xz', 'r:xz') as tf:
+              tf.extractall('/tmp/pristine', filter='data')
+          PYEXTRACT
+          test -d /tmp/pristine/supermarkt-preisvergleich-0.0.1
+
+      - name: Verify pristine repository tree
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          cd /tmp/pristine/supermarkt-preisvergleich-0.0.1
+          cat >/tmp/expected-files.txt <<'FILES'
+          .dockerignore
+          .env.example
+          .github/workflows/tests.yml
+          .gitignore
+          Dockerfile
+          LICENSE
+          README.md
+          RELEASE_NOTES.md
+          compose.yml
+          pyproject.toml
+          src/supermarkt/__init__.py
+          src/supermarkt/asgi.py
+          src/supermarkt/assets.py
+          src/supermarkt/cache.py
+          src/supermarkt/common.py
+          src/supermarkt/compare.py
+          src/supermarkt/config.py
+          src/supermarkt/diagnostics.py
+          src/supermarkt/http.py
+          src/supermarkt/images.py
+          src/supermarkt/loyalty.py
+          src/supermarkt/models.py
+          src/supermarkt/presentation.py
+          src/supermarkt/region.py
+          src/supermarkt/security.py
+          src/supermarkt/service.py
+          src/supermarkt/sources/__init__.py
+          src/supermarkt/sources/aldi.py
+          src/supermarkt/sources/edeka.py
+          src/supermarkt/sources/kaufland.py
+          src/supermarkt/sources/marktguru.py
+          src/supermarkt/sources/rewe.py
+          src/supermarkt/ui.py
+          src/supermarkt/version.py
+          src/supermarkt/web.py
+          tests/integration/test_live_sources.py
+          tests/test_cache.py
+          tests/test_common.py
+          tests/test_config.py
+          tests/test_diagnostics.py
+          tests/test_edeka_week.py
+          tests/test_images.py
+          tests/test_kaufland.py
+          tests/test_loyalty.py
+          tests/test_marktguru.py
+          tests/test_privacy.py
+          tests/test_region.py
+          tests/test_release_cleanliness.py
+          tests/test_request.py
+          tests/test_rewe.py
+          tests/test_routing.py
+          tests/test_security.py
+          tests/test_web.py
+          FILES
+          sed -i 's/^          //' /tmp/expected-files.txt
+          find . -type f -print | sed 's#^./##' | LC_ALL=C sort >/tmp/actual-files.txt
+          diff -u /tmp/expected-files.txt /tmp/actual-files.txt
+          test "$(wc -l </tmp/actual-files.txt | tr -d ' ')" = 53
+
+          grep -Fq 'BSD 3-Clause License' LICENSE
+          grep -Fq 'Copyright (c) 2026 lesecuritae für Tarnkappe.info' LICENSE
+          grep -Fq 'license = "BSD-3-Clause"' pyproject.toml
+          grep -Fq 'pythonpath = ["src"]' pyproject.toml
+          grep -Fq 'Grocy' README.md
+          grep -Fq 'KitchenOwl' README.md
+          grep -Fq 'https://tarnkappe.info/spenden/' README.md
+          grep -Fq '87oownPVNFFciRNe2DLaNQPrVsjprbZBX7bHnPENABDyGpM6isrzKeWGsjT5W86h9d6A5nhE2Z2ZAXCHksvC2EikGGaWB8u' README.md
+          grep -Fq 'actions/checkout@v6' .github/workflows/tests.yml
+          grep -Fq 'actions/setup-python@v6' .github/workflows/tests.yml
+
+      - name: Test package and Docker in disposable copy
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          cp -a /tmp/pristine/supermarkt-preisvergleich-0.0.1 /tmp/testtree
+          cd /tmp/testtree
+
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -e '.[dev]'
+          python -m compileall -q src tests
+          python -m pytest -m 'not live' -p no:cacheprovider
+          python -m pip wheel --no-build-isolation --no-deps . -w /tmp/release
+
+          SUPERMARKT_PORT=7333 docker compose config >/dev/null
+          SUPERMARKT_PORT=7333 docker compose up -d --build
+          trap 'SUPERMARKT_PORT=7333 docker compose down -v' EXIT
+
+          ready=0
+          for _ in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:7333/health >/dev/null \
+              && curl --fail --silent http://127.0.0.1:7333/ | grep -q 'Postleitzahl'; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" -ne 1 ]; then
+            SUPERMARKT_PORT=7333 docker compose ps
+            SUPERMARKT_PORT=7333 docker compose logs --no-color
+            exit 1
+          fi
+          SUPERMARKT_PORT=7333 docker compose down -v
+          trap - EXIT
+
+      - name: Build source release archives from pristine tree
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          python - <<'PYBUILD'
+          from pathlib import Path
+          import hashlib, tarfile, zipfile
+
+          src = Path('/tmp/pristine/supermarkt-preisvergleich-0.0.1')
+          out = Path('/tmp/release')
+          prefix = 'supermarkt-preisvergleich-0.0.1'
+          files = sorted(p for p in src.rglob('*') if p.is_file())
+          if len(files) != 53:
+              raise SystemExit(f'expected 53 pristine files, got {len(files)}')
+
+          zip_path = out / f'{prefix}-github.zip'
+          with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+              for p in files:
+                  zf.write(p, f'{prefix}/{p.relative_to(src).as_posix()}')
+
+          tar_path = out / f'{prefix}.tar.gz'
+          with tarfile.open(tar_path, 'w:gz', compresslevel=9) as tf:
+              for p in files:
+                  tf.add(p, arcname=f'{prefix}/{p.relative_to(src).as_posix()}', recursive=False)
+
+          wheel = list(out.glob('*.whl'))
+          if len(wheel) != 1:
+              raise SystemExit(f'expected exactly one wheel, got {len(wheel)}')
+          artifacts = [zip_path, tar_path, wheel[0]]
+          (out / 'SHA256SUMS.txt').write_text(
+              ''.join(f'{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.name}\n' for p in artifacts),
+              encoding='utf-8',
+          )
+          PYBUILD
+          unzip -t /tmp/release/supermarkt-preisvergleich-0.0.1-github.zip >/dev/null
+          tar -tzf /tmp/release/supermarkt-preisvergleich-0.0.1.tar.gz >/dev/null
+          cd /tmp/release
+          sha256sum --check --strict SHA256SUMS.txt
+
+      - name: Replace main with one clean root commit
+        id: final
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          cd "$GITHUB_WORKSPACE"
+          git config user.name 'lesecuritae'
+          git config user.email '183674409+lesecuritae@users.noreply.github.com'
+          git checkout --orphan clean-main
+          git rm -rf . >/dev/null 2>&1 || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a /tmp/pristine/supermarkt-preisvergleich-0.0.1/. .
+
+          find . -type f -print | sed 's#^./##' | LC_ALL=C sort >/tmp/final-files.txt
+          diff -u /tmp/expected-files.txt /tmp/final-files.txt
+          test "$(wc -l </tmp/final-files.txt | tr -d ' ')" = 53
+          test ! -e .github/workflows/publish-initial.yml
+
+          git add -A
+          test "$(git ls-files | wc -l | tr -d ' ')" = 53
+          git commit -m 'Initial release 0.0.1'
+          final_sha="$(git rev-parse HEAD)"
+          echo "sha=$final_sha" >> "$GITHUB_OUTPUT"
+          git push --force origin HEAD:main
+
+      - name: Create verified release v0.0.1
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          final_sha='${{ steps.final.outputs.sha }}'
+          if gh release view v0.0.1 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release delete v0.0.1 --repo "$GITHUB_REPOSITORY" --cleanup-tag --yes
+          fi
+          git push origin ':refs/tags/v0.0.1' >/dev/null 2>&1 || true
+          gh release create v0.0.1 \
+            /tmp/release/supermarkt-preisvergleich-0.0.1-github.zip \
+            /tmp/release/supermarkt-preisvergleich-0.0.1.tar.gz \
+            /tmp/release/*.whl \
+            /tmp/release/SHA256SUMS.txt \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$final_sha" \
+            --title '0.0.1' \
+            --notes-file /tmp/pristine/supermarkt-preisvergleich-0.0.1/RELEASE_NOTES.md
+
+          assets="$(gh release view v0.0.1 --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets | length')"
+          test "$assets" = 4
+
+      - name: Remove private staging branch
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          git push origin --delete publish-staging || true
