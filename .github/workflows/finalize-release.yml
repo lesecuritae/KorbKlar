@@ -28,3 +28,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Release 0.0.1"
           git push origin HEAD:main
+
+# Triggered through the GitHub contents API.
