@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.env
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+.DS_Store
+
+# Build-Ausgaben
+dist/
+build/
+*.egg-info/
+
+# Laufzeitdaten
+data/
