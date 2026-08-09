@@ -3,8 +3,6 @@ name: Publish initial release
 "on":
   push:
     branches: [main]
-    paths:
-      - ".github/workflows/publish-initial.yml"
 
 permissions:
   contents: write
@@ -33,32 +31,8 @@ jobs:
         run: |
           set -Eeuo pipefail
           ARCHIVE=/tmp/supermarkt-preisvergleich-0.0.1.tar.xz
-          : > "$ARCHIVE"
-          while read -r sha; do
-            [ -n "$sha" ] || continue
-            gh api "repos/$GITHUB_REPOSITORY/git/blobs/$sha" --jq .content \
-              | tr -d '\n' \
-              | base64 --decode >> "$ARCHIVE"
-          done <<'BLOBS'
-            bb63e375167dd8b522224e38211da2fc53bab0da
-            8e50620f329142b3f76694233aeefb3a822f2ac8
-            74ced09bc4dbf39dab29a7706af329b7dd572379
-            a708222be06f411e9e5c7ab90abeafd03f6ff2dd
-            46da249a08a8b50ee2224102332560b7810fbbfd
-            0b56d8f56003dc01966a0614e7cf43b9e23267b4
-            a07127ab294aa4e116c76272b551704c42e1b491
-            777e94441cdc1efd0d9af47d1a3081a8cb56c625
-            39765736380d162a811bf43b297ad75804e35fd1
-            11f337a10b9960fc624589412849f7948be4fc93
-            b44b0c157de18f71202bc5ea2155a4d3395e1d48
-            10286e30043076d7b4764ec5e66b404a6485abdd
-            e64d025ea51a3cef841d108b93dd423610cbea2c
-            93565cd2ff29f51201fca33bad464482766129fe
-            24750e30b336aadf27aaa82947048fc80be2dc1a
-            0d659c73cdb5fbd08538e3a178e55a1ae842d0c8
-            31d828f50641774b5e38fa6b7df95b843bde0e13
-            8a18857bd9dccd280926cc61a144051f5a61293b
-          BLOBS
+          test "$(find .chunks -maxdepth 1 -type f -name '*.bin' | wc -l | tr -d ' ')" = 19
+          cat .chunks/*.bin > "$ARCHIVE"
           echo "10c286e74b955300e06092ac3157a3f9329f54e4827d6fb869f3302708765447  $ARCHIVE" | sha256sum --check --strict
 
           rm -rf /tmp/pristine /tmp/testtree /tmp/release
