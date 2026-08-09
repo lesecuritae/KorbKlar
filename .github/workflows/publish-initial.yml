@@ -1,8 +1,7 @@
 name: Publish initial release
 
 "on":
-  schedule:
-    - cron: "*/5 * * * *"
+  pull_request:
 
 permissions:
   contents: write
