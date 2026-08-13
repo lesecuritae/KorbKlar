@@ -1,4 +1,4 @@
-"""Direkter Produktbild-Service für den Supermarkt-Preisvergleich."""
+"""Direkter Produktbild-Service für KorbKlar."""
 from __future__ import annotations
 
 import hashlib

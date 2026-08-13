@@ -1,3 +1,25 @@
+# 0.1.0
+
+Lizenz: BSD-3-Clause. Copyright (c) 2026 lesecuritae für Tarnkappe.info.
+
+KorbKlar ist die überarbeitete Ausgabe des bisherigen Supermarkt-Preisvergleichs. Die Vergleichslogik und die bestehenden Quellenadapter bleiben erhalten; Name, Oberfläche und öffentliche Projektmetadaten wurden auf KorbKlar umgestellt.
+
+## Änderungen
+
+- Neues KorbKlar-Branding für Weboberfläche, Favicon und README-Grafik.
+- Docker-Dienst, Container und Daten-Volume tragen den neuen Namen `korbklar`.
+- Python-Paketmetadaten und User-Agent wurden auf KorbKlar aktualisiert.
+- Native Installationen verwenden für neue Laufzeitdaten `~/.local/state/korbklar`; ein vorhandener alter Zustandspfad wird automatisch weiterverwendet.
+- Dunkles Farbschema an die grüne KorbKlar-Farbwelt angepasst.
+- README- und SVG-Branding bereinigt; die Header-Grafik kommt ohne problematische SVG-Filter aus.
+- Bestehende Preis-, Mengen-, Marken-, Händler-, Bild- und Cache-Regressionstests bleiben erhalten.
+
+## Docker-Hinweis beim Umstieg
+
+Durch den neuen Compose-Projektnamen und das neue Volume `korbklar-data` wird ein bestehendes Docker-Volume der alten Ausgabe nicht automatisch eingebunden. Darin liegen nur Laufzeitdaten wie Snapshots, Signierschlüssel und Bildcache. Für einen frischen Start kann das alte Volume unangetastet bleiben; bestehende signierte Ergebnislinks gelten dann nicht im neuen Volume weiter.
+
+---
+
 # 0.0.1
 
 Lizenz: BSD-3-Clause. Copyright (c) 2026 lesecuritae für Tarnkappe.info.

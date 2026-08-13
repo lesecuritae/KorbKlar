@@ -73,13 +73,13 @@ def test_docker_system_dependencies_are_actually_used():
     assert "chromium" in dockerfile and '"chromium"' in runtime
     assert " curl" in dockerfile and '"curl"' in runtime
     assert 'CMD ["uvicorn"' in dockerfile
-    assert "USER supermarkt" in dockerfile
+    assert "USER korbklar" in dockerfile
 
 
 def test_compose_is_one_self_contained_service():
     compose = (ROOT / "compose.yml").read_text(encoding="utf-8")
-    assert compose.count("  supermarkt:\n") == 1
-    assert "supermarkt-data:/data" in compose
+    assert compose.count("  korbklar:\n") == 1
+    assert "korbklar-data:/data" in compose
     assert '"${SUPERMARKT_PORT:-8000}:8000"' in compose
     assert "healthcheck:" in compose
     assert "SUPERMARKT_DATA_DIR: ${SUPERMARKT_DATA_DIR:-/data}" in compose
@@ -101,7 +101,8 @@ def test_runtime_version_matches_package_metadata():
 
     metadata = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     assert metadata["project"]["version"] == __version__
-    assert USER_AGENT == f"supermarkt-preisvergleich/{__version__}"
+    assert USER_AGENT == f"korb-klar/{__version__}"
+    assert __version__ == "0.1.0"
 
 
 def test_default_host_port_is_configurable_without_changing_container_port():
@@ -169,3 +170,28 @@ def test_release_has_no_private_or_internal_revision_markers():
     )
     for marker in forbidden:
         assert marker.casefold() not in text.casefold(), marker
+
+
+def test_public_branding_is_korbklar():
+    public_files = [
+        ROOT / "README.md",
+        ROOT / "compose.yml",
+        ROOT / "pyproject.toml",
+        ROOT / ".env.example",
+        ROOT / "src/supermarkt/asgi.py",
+        ROOT / "src/supermarkt/ui.py",
+        ROOT / "src/supermarkt/assets.py",
+    ]
+    text = "\n".join(path.read_text(encoding="utf-8", errors="replace") for path in public_files)
+    assert "Supermarkt-Preisvergleich" not in text
+    assert "KorbKlar" in text
+    assert "supermarkt-preisvergleich/<Version>" not in text
+
+
+def test_readme_header_is_well_formed_svg():
+    import xml.etree.ElementTree as ET
+
+    header = ROOT / "docs/readme-header.svg"
+    root = ET.fromstring(header.read_text(encoding="utf-8"))
+    assert root.tag.endswith("svg")
+    assert root.attrib.get("viewBox") == "0 0 1200 480"

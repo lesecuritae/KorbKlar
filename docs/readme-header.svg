@@ -1,88 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">Supermarkt-Preisvergleich</title>
-  <desc id="desc">Vorschau des selbst gehosteten Supermarkt-Preisvergleichs mit regionaler Suche, aktuellen Angeboten, Grundpreisen und mehreren Anbietern.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480" role="img" aria-labelledby="title desc">
+  <title id="title">KorbKlar</title>
+  <desc id="desc">KorbKlar vergleicht regionale Supermarktangebote und macht Preise direkt vergleichbar.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111d"/><stop offset="1" stop-color="#0b1725"/></linearGradient>
-    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9be22d"/><stop offset="1" stop-color="#66b51b"/></linearGradient>
-    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#132131"/><stop offset="1" stop-color="#0c1723"/></linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity=".34"/></filter>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f1f8f4"/>
+      <stop offset="1" stop-color="#dcefe5"/>
+    </linearGradient>
   </defs>
-  <rect width="1600" height="900" rx="34" fill="url(#bg)"/>
-  <circle cx="1460" cy="100" r="180" fill="#73c620" opacity=".055"/><circle cx="140" cy="820" r="230" fill="#3b82f6" opacity=".045"/>
+  <rect width="1200" height="480" rx="32" fill="url(#bg)"/>
+  <circle cx="1082" cy="64" r="176" fill="#c8e5d4" opacity=".58"/>
+  <circle cx="52" cy="454" r="152" fill="#ffffff" opacity=".56"/>
 
-  <!-- Header -->
-  <g transform="translate(58 52)">
-    <g transform="translate(0 2)" stroke="#8bd328" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M8 8h22l15 64h73l15-44H39"/><circle cx="57" cy="92" r="8"/><circle cx="116" cy="92" r="8"/>
-      <path d="M76 35l28 28M104 35L76 63" stroke-width="6"/>
-    </g>
-    <text x="165" y="62" fill="#f7fafc" font-size="56" font-weight="800" font-family="Inter,Segoe UI,Arial,sans-serif">Supermarkt-</text>
-    <text x="494" y="62" fill="#8bd328" font-size="56" font-weight="800" font-family="Inter,Segoe UI,Arial,sans-serif">Preisvergleich</text>
-    <text x="165" y="108" fill="#cbd5e1" font-size="25" font-family="Inter,Segoe UI,Arial,sans-serif">Selbst gehosteter Angebotsvergleich für aktuelle Prospekte und Preise in deiner Nähe.</text>
+  <g transform="translate(92 106)">
+    <rect width="120" height="120" rx="29" fill="#116149"/>
+    <path d="M28 50h64l-8 44H36l-8-44Z" fill="#fff"/>
+    <path d="M41 50c2-17 8-25 19-25s17 8 19 25" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+    <path d="m47 70 8 8 19-21" fill="none" stroke="#116149" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
-  <!-- Left feature column -->
-  <g font-family="Inter,Segoe UI,Arial,sans-serif">
-    <g transform="translate(60 205)">
-      <rect width="390" height="112" rx="20" fill="#0d1a28" stroke="#23374a"/>
-      <circle cx="48" cy="56" r="30" fill="#1c3824"/><path d="M35 43h25l13 13-27 27-19-19z" fill="none" stroke="#8bd328" stroke-width="5" stroke-linejoin="round"/><circle cx="45" cy="52" r="4" fill="#8bd328"/>
-      <text x="94" y="45" fill="#f8fafc" font-size="24" font-weight="700">Aktuelle Angebote</text>
-      <text x="94" y="76" fill="#b8c4d1" font-size="18">Prospekte automatisch erfassen</text><text x="94" y="99" fill="#b8c4d1" font-size="18">und günstigste Treffer finden.</text>
-    </g>
-    <g transform="translate(60 333)">
-      <rect width="390" height="112" rx="20" fill="#0d1a28" stroke="#23374a"/>
-      <circle cx="48" cy="56" r="30" fill="#142c3c"/><path d="M48 32c-13 0-23 10-23 23 0 17 23 38 23 38s23-21 23-38c0-13-10-23-23-23z" fill="none" stroke="#38a7ff" stroke-width="5"/><circle cx="48" cy="55" r="7" fill="#38a7ff"/>
-      <text x="94" y="45" fill="#f8fafc" font-size="24" font-weight="700">Regionale Suche</text>
-      <text x="94" y="76" fill="#b8c4d1" font-size="18">Postleitzahl eingeben und</text><text x="94" y="99" fill="#b8c4d1" font-size="18">Angebote in der Region laden.</text>
-    </g>
-    <g transform="translate(60 461)">
-      <rect width="390" height="112" rx="20" fill="#0d1a28" stroke="#23374a"/>
-      <circle cx="48" cy="56" r="30" fill="#251f3d"/><path d="M27 69h42M35 69V47M48 69V38M61 69V54" stroke="#a678ff" stroke-width="6" stroke-linecap="round"/>
-      <text x="94" y="45" fill="#f8fafc" font-size="24" font-weight="700">Direkter Vergleich</text>
-      <text x="94" y="76" fill="#b8c4d1" font-size="18">Preis, Packungsgröße und</text><text x="94" y="99" fill="#b8c4d1" font-size="18">Grundpreis auf einen Blick.</text>
-    </g>
-    <g transform="translate(60 589)">
-      <rect width="390" height="112" rx="20" fill="#0d1a28" stroke="#23374a"/>
-      <circle cx="48" cy="56" r="30" fill="#153428"/><path d="M48 29l21 8v17c0 17-10 29-21 36-11-7-21-19-21-36V37z" fill="none" stroke="#4bd47b" stroke-width="5"/><path d="M38 55l7 7 14-16" fill="none" stroke="#4bd47b" stroke-width="5" stroke-linecap="round"/>
-      <text x="94" y="45" fill="#f8fafc" font-size="24" font-weight="700">Privat &amp; selbst gehostet</text>
-      <text x="94" y="76" fill="#b8c4d1" font-size="18">Keine Registrierung und keine</text><text x="94" y="99" fill="#b8c4d1" font-size="18">externe Cloud erforderlich.</text>
-    </g>
+  <text x="244" y="178" fill="#14201b" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="76" font-weight="760" letter-spacing="-3">Korb<tspan fill="#116149">Klar</tspan></text>
+  <text x="98" y="286" fill="#405249" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="30">Regionale Angebote. Klare Preise.</text>
+  <text x="98" y="330" fill="#64736b" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="19">Selbst gehostet · ohne Konto · für regionale Wochenangebote</text>
+
+  <!-- Shadow drawn as a plain rounded rectangle so the artwork also works in conservative SVG renderers. -->
+  <rect x="754" y="119" width="352" height="264" rx="24" fill="#0a3c2d" opacity=".10"/>
+  <g transform="translate(742 105)" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+    <rect width="352" height="264" rx="24" fill="#fff" stroke="#d9e6df"/>
+    <text x="28" y="46" fill="#63716a" font-size="16" font-weight="650" letter-spacing="1.2">PREISVERGLEICH</text>
+    <text x="28" y="86" fill="#14201b" font-size="25" font-weight="720">Naturjoghurt</text>
+    <text x="28" y="116" fill="#63716a" font-size="17">500 g · diese Woche</text>
+    <path d="M28 143h296" stroke="#dce5e0"/>
+    <text x="28" y="184" fill="#14201b" font-size="18">Markt A</text>
+    <text x="324" y="184" text-anchor="end" fill="#116149" font-size="26" font-weight="760">0,99 €</text>
+    <text x="28" y="228" fill="#14201b" font-size="18">Markt B</text>
+    <text x="324" y="228" text-anchor="end" fill="#63716a" font-size="26" font-weight="700">1,29 €</text>
   </g>
-
-  <!-- Main app mockup -->
-  <g transform="translate(500 185)" filter="url(#shadow)" font-family="Inter,Segoe UI,Arial,sans-serif">
-    <rect width="1040" height="566" rx="28" fill="#09131f" stroke="#34485c" stroke-width="2"/>
-    <rect x="20" y="20" width="1000" height="70" rx="16" fill="#101d2b"/>
-    <g transform="translate(44 39)" stroke="#8bd328" stroke-width="4" fill="none"><path d="M0 0h12l8 31h37l8-21H17"/><circle cx="27" cy="40" r="4"/><circle cx="55" cy="40" r="4"/></g>
-    <text x="125" y="64" fill="#f8fafc" font-size="25" font-weight="700">Supermarkt</text><text x="260" y="64" fill="#8bd328" font-size="25" font-weight="700">Preisvergleich</text>
-    <text x="830" y="62" fill="#9fb0c1" font-size="17">aktuelle Angebote</text>
-
-    <text x="44" y="126" fill="#9fb0c1" font-size="16">Postleitzahl</text>
-    <rect x="44" y="140" width="610" height="56" rx="12" fill="#142333" stroke="#31465b"/>
-    <text x="66" y="176" fill="#e8eef5" font-size="21">12345</text>
-    <rect x="674" y="140" width="318" height="56" rx="12" fill="url(#green)"/>
-    <text x="765" y="176" fill="#10200a" font-size="19" font-weight="800">Angebote suchen</text>
-
-    <text x="44" y="244" fill="#f8fafc" font-size="26" font-weight="700">Die günstigsten Angebote für dich</text>
-    <text x="44" y="274" fill="#93a4b6" font-size="16">Regionale Treffer · nach Preis und Grundpreis vergleichbar</text>
-
-    <!-- Product cards -->
-    <g transform="translate(44 298)">
-      <g><rect width="174" height="210" rx="16" fill="url(#panel)" stroke="#2a3d50"/><circle cx="87" cy="54" r="28" fill="#d84b42"/><circle cx="75" cy="50" r="16" fill="#ef665c"/><path d="M86 27l5 13 13-7" stroke="#66b51b" stroke-width="5" fill="none"/><text x="18" y="105" fill="#f8fafc" font-size="19" font-weight="700">Äpfel</text><text x="18" y="130" fill="#aab7c5" font-size="15">1 kg</text><text x="18" y="164" fill="#8bd328" font-size="26" font-weight="800">1,49 €</text><text x="18" y="188" fill="#7f91a4" font-size="14">1,49 €/kg · Markt A</text></g>
-      <g transform="translate(190)"><rect width="174" height="210" rx="16" fill="url(#panel)" stroke="#2a3d50"/><rect x="61" y="28" width="52" height="58" rx="8" fill="#dceeff"/><rect x="68" y="20" width="38" height="13" rx="4" fill="#86bfff"/><path d="M74 46h26v24H74z" fill="#6db1ef"/><text x="18" y="105" fill="#f8fafc" font-size="19" font-weight="700">Milch 1,5 %</text><text x="18" y="130" fill="#aab7c5" font-size="15">1 l</text><text x="18" y="164" fill="#8bd328" font-size="26" font-weight="800">0,89 €</text><text x="18" y="188" fill="#7f91a4" font-size="14">0,89 €/l · Markt B</text></g>
-      <g transform="translate(380)"><rect width="174" height="210" rx="16" fill="url(#panel)" stroke="#2a3d50"/><path d="M51 72c8-33 28-42 38-42-3 28-12 45-38 42z" fill="#ffd84a"/><path d="M72 76c7-35 26-45 38-45-1 30-12 47-38 45z" fill="#f5c82f"/><path d="M94 77c6-33 24-42 35-42-1 28-11 44-35 42z" fill="#eeb71e"/><text x="18" y="105" fill="#f8fafc" font-size="19" font-weight="700">Bananen</text><text x="18" y="130" fill="#aab7c5" font-size="15">1 kg</text><text x="18" y="164" fill="#8bd328" font-size="26" font-weight="800">1,19 €</text><text x="18" y="188" fill="#7f91a4" font-size="14">1,19 €/kg · Markt C</text></g>
-      <g transform="translate(570)"><rect width="174" height="210" rx="16" fill="url(#panel)" stroke="#2a3d50"/><rect x="48" y="38" width="78" height="48" rx="8" fill="#f3da85"/><rect x="56" y="45" width="62" height="34" rx="5" fill="#f8e7a6"/><text x="18" y="105" fill="#f8fafc" font-size="19" font-weight="700">Butter</text><text x="18" y="130" fill="#aab7c5" font-size="15">250 g</text><text x="18" y="164" fill="#8bd328" font-size="26" font-weight="800">1,79 €</text><text x="18" y="188" fill="#7f91a4" font-size="14">0,72 €/100 g · Markt A</text></g>
-      <g transform="translate(760)"><rect width="174" height="210" rx="16" fill="url(#panel)" stroke="#2a3d50"/><rect x="58" y="26" width="58" height="62" rx="8" fill="#7b4b32"/><path d="M65 42h44M65 52h44" stroke="#d4a27b" stroke-width="4"/><circle cx="87" cy="70" r="10" fill="#442719"/><text x="18" y="105" fill="#f8fafc" font-size="19" font-weight="700">Kaffee</text><text x="18" y="130" fill="#aab7c5" font-size="15">500 g</text><text x="18" y="164" fill="#8bd328" font-size="26" font-weight="800">3,49 €</text><text x="18" y="188" fill="#7f91a4" font-size="14">0,70 €/100 g · Markt D</text></g>
-    </g>
-  </g>
-
-  <!-- Bottom badges -->
-  <g transform="translate(500 776)" font-family="Inter,Segoe UI,Arial,sans-serif">
-    <g><rect width="240" height="76" rx="18" fill="#101d2b" stroke="#2b4054"/><circle cx="38" cy="38" r="20" fill="#133653"/><path d="M23 43h30M27 36h6v7h-6zM36 29h6v14h-6zM45 33h6v10h-6z" fill="#49b6ff"/><text x="72" y="33" fill="#f4f7fa" font-size="18" font-weight="700">Docker Ready</text><text x="72" y="56" fill="#9fb0c1" font-size="14">einfach selbst hosten</text></g>
-    <g transform="translate(255)"><rect width="240" height="76" rx="18" fill="#101d2b" stroke="#2b4054"/><circle cx="38" cy="38" r="20" fill="#22351a"/><text x="31" y="46" fill="#8bd328" font-size="24" font-weight="800">€</text><text x="72" y="33" fill="#f4f7fa" font-size="18" font-weight="700">Grundpreise</text><text x="72" y="56" fill="#9fb0c1" font-size="14">Mengen sauber vergleichen</text></g>
-    <g transform="translate(510)"><rect width="240" height="76" rx="18" fill="#101d2b" stroke="#2b4054"/><circle cx="38" cy="38" r="20" fill="#2d243d"/><path d="M28 38h20M38 28v20" stroke="#b78aff" stroke-width="5" stroke-linecap="round"/><text x="72" y="33" fill="#f4f7fa" font-size="18" font-weight="700">Bonus optional</text><text x="72" y="56" fill="#9fb0c1" font-size="14">nur bezifferbare Vorteile</text></g>
-    <g transform="translate(765)"><rect width="240" height="76" rx="18" fill="#101d2b" stroke="#2b4054"/><circle cx="38" cy="38" r="20" fill="#153428"/><path d="M30 39l6 6 12-15" fill="none" stroke="#4bd47b" stroke-width="5" stroke-linecap="round"/><text x="72" y="33" fill="#f4f7fa" font-size="18" font-weight="700">Keine Cloud nötig</text><text x="72" y="56" fill="#9fb0c1" font-size="14">lokal und unabhängig</text></g>
-  </g>
-
-  <text x="60" y="842" fill="#64778a" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15">Beispieldaten · keine Händler- oder Produktmarken dargestellt</text>
 </svg>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate icon" href="/favicon.ico">
+<meta name="description" content="KorbKlar vergleicht aktuelle regionale Supermarktangebote.">
+<meta name="theme-color" content="#116149">
+<title>KorbKlar</title>
+<link rel="stylesheet" href="/static/home.css">
+</head>
+<body>
+<main class="card">
+<h1>Korb<span style="color:var(--accent)">Klar</span></h1>
+<p>Postleitzahl eingeben. Der Dienst sucht die verfügbaren Wochenangebote automatisch und öffnet anschließend den vollständigen Vergleich.</p>
+__ERROR_HTML__
+<form method="post" action="/search" id="searchForm">
+<input name="postal_code" value="__POSTAL_CODE__" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" minlength="5" maxlength="5" placeholder="Postleitzahl" aria-label="Postleitzahl" required autofocus>
+<button type="submit" id="submitButton">Angebote suchen</button>
+</form>
+<div class="hint">Keine LLM erforderlich. Bonusprogramme, Händlerfilter und Sortierung wählst du anschließend in der Ergebnisansicht.</div>
+</main>
+<script src="/static/home.js" defer></script>
+</body>
+</html>

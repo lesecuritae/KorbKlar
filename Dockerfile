@@ -11,11 +11,11 @@ WORKDIR /app
 COPY pyproject.toml README.md LICENSE ./
 COPY src ./src
 RUN pip install --no-cache-dir . \
-    && useradd --system --uid 10001 --create-home --home-dir /home/supermarkt supermarkt \
+    && useradd --system --uid 10001 --create-home --home-dir /home/korbklar korbklar \
     && mkdir -p /data \
-    && chown -R supermarkt:supermarkt /data
+    && chown -R korbklar:korbklar /data
 
-USER supermarkt
+USER korbklar
 VOLUME ["/data"]
 EXPOSE 8000
 

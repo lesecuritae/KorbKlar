@@ -1,9 +1,9 @@
-name: supermarkt-preisvergleich
+name: korbklar
 
 services:
-  supermarkt:
+  korbklar:
     build: .
-    container_name: supermarkt-preisvergleich
+    container_name: korbklar
     restart: unless-stopped
     init: true
     security_opt:
@@ -30,7 +30,7 @@ services:
       SUPERMARKT_IMAGE_CACHE_MAX_BYTES: ${SUPERMARKT_IMAGE_CACHE_MAX_BYTES:-536870912}
       SUPERMARKT_IMAGE_MAX_FILE_BYTES: ${SUPERMARKT_IMAGE_MAX_FILE_BYTES:-4194304}
     volumes:
-      - supermarkt-data:/data
+      - korbklar-data:/data
     ports:
       - "${SUPERMARKT_PORT:-8000}:8000"
     healthcheck:
@@ -41,4 +41,4 @@ services:
       start_period: 20s
 
 volumes:
-  supermarkt-data:
+  korbklar-data:
